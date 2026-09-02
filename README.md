@@ -3,7 +3,7 @@
 Calculadora web de pedidos de suministros para caballos. El proyecto está
 organizado como dos aplicaciones independientes:
 
-- `code/frontend`: aplicación Vite con HTML, JavaScript y CSS.
+- `code/frontend`: aplicación React con Vite.
 - `code/backend`: servidor Express que sirve la compilación del frontend y
   expone `GET /health`.
 

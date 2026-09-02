@@ -1,7 +1,20 @@
-FROM nginx:alpine
+FROM node:22-alpine AS frontend-build
 
-COPY . /usr/share/nginx/html
+WORKDIR /app/frontend
+COPY code/frontend/package*.json ./
+RUN npm ci
+COPY code/frontend ./
+RUN npm run build
 
-EXPOSE 80
+FROM node:22-alpine
 
-CMD ["nginx", "-g", "daemon off;"]
+WORKDIR /app/backend
+COPY code/backend/package*.json ./
+RUN npm ci --omit=dev
+COPY code/backend ./
+COPY --from=frontend-build /app/frontend/dist /app/frontend/dist
+
+ENV NODE_ENV=production
+EXPOSE 3000
+
+CMD ["npm", "start"]

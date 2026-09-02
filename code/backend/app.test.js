@@ -1,5 +1,5 @@
 const assert = require("node:assert/strict");
-const { calculateItemTotal, calculateOrderTotal } = require("./script.js");
+const { calculateItemTotal, calculateOrderTotal } = require("../frontend/src/calculations.cjs");
 
 assert.equal(calculateItemTotal(2, 4.5), 9);
 assert.equal(calculateItemTotal(0, 10), 0);

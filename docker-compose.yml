@@ -9,4 +9,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:3000"
+    volumes:
+      - orders-data:/app/backend/data
     restart: unless-stopped
+
+volumes:
+  orders-data:

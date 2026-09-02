@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  web-horses:
+    image: martinlaizg/web-horses:latest
+    container_name: web-horses
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    restart: unless-stopped

@@ -29,16 +29,16 @@ body {
 }
 
 .card {
-  width: min(100%, 900px);
+  width: min(100%, 760px);
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 18px;
   box-shadow: 0 18px 32px var(--shadow);
-  padding: 24px;
+  padding: 18px;
 }
 
 .header {
-  margin-bottom: 18px;
+  margin-bottom: 14px;
 }
 
 .eyebrow {
@@ -57,61 +57,48 @@ h1 {
 
 .items {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  gap: 6px;
 }
 
 .item-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 72px 84px;
-  grid-template-areas:
-    "name name name"
-    "quantity price total";
+  grid-template-columns: minmax(0, 1fr) 74px 82px 98px;
   gap: 10px;
-  align-items: end;
-  padding: 14px;
+  align-items: center;
+  padding: 8px 12px;
   border: 1px solid var(--border);
   border-radius: 14px;
   background: #fff;
 }
 
 .item-name {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--text);
-  grid-area: name;
 }
 
 .field {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 5px;
-}
-
-.item-row .field:first-of-type {
-  grid-area: quantity;
-}
-
-.item-row .field:nth-of-type(2) {
-  grid-area: price;
+  gap: 3px;
 }
 
 .field label,
 .item-total span,
 .summary span {
   color: var(--muted);
-  font-size: 0.82rem;
+  font-size: 0.68rem;
   font-weight: 600;
 }
 
 input {
   width: 100%;
-  padding: 0.8rem 0.9rem;
-  border-radius: 10px;
+  padding: 0.48rem 0.55rem;
+  border-radius: 7px;
   border: 1px solid var(--border);
   background: #f8f7f5;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: var(--text);
 }
 
@@ -121,42 +108,41 @@ input:focus {
 }
 
 .item-total {
-  grid-area: total;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  align-items: flex-start;
+  gap: 3px;
+  align-items: flex-end;
   justify-content: center;
   min-height: 42px;
 }
 
 .item-total strong,
 .summary strong {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: var(--primary-dark);
 }
 
 .summary {
-  margin-top: 20px;
+  margin-top: 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
   border-top: 2px solid var(--border);
-  padding-top: 20px;
-  font-size: 1.1rem;
+  padding-top: 12px;
+  font-size: 1rem;
   font-weight: 700;
 }
 
 .summary strong {
-  font-size: clamp(1.5rem, 1vw + 1rem, 2.2rem);
+  font-size: 1.5rem;
 }
 
 button {
-  margin-top: 20px;
+  margin-top: 12px;
   border: 0;
   border-radius: 10px;
-  padding: 0.85rem 1.2rem;
+  padding: 0.65rem 1rem;
   background: var(--primary);
   color: #fff;
   font-weight: 700;
@@ -164,7 +150,7 @@ button {
 }
 
 .history {
-  margin-top: 24px;
+  margin-top: 14px;
 }
 
 .history ul {
@@ -184,8 +170,10 @@ button {
 }
 
 @media (max-width: 680px) {
-  .items {
-    grid-template-columns: 1fr;
+  .item-row {
+    grid-template-columns: minmax(0, 1fr) 64px 74px 88px;
+    gap: 6px;
+    padding: 8px;
   }
 
   .summary {

@@ -17,7 +17,6 @@ export default function App() {
 	const [items, setItems] = useState(initialItems);
 	const [history, setHistory] = useState([]);
 	const [message, setMessage] = useState("");
-	const [expandedItem, setExpandedItem] = useState(null);
 	const total = useMemo(() => calculateOrderTotal(items), [items]);
 
 	useEffect(() => {
@@ -60,64 +59,44 @@ export default function App() {
 				<div className="items" aria-label="Lista de productos">
 					{items.map((item) => (
 						<div className="item-row" data-item={item.key} key={item.key}>
-							<button
-								className="item-toggle"
-								type="button"
-								aria-expanded={expandedItem === item.key}
-								onClick={() =>
-									setExpandedItem((current) =>
-										current === item.key ? null : item.key,
-									)
-								}
-							>
-								<span className="item-name">{item.name}</span>
-								<span className="item-summary">
-									{item.quantity} uds. ·{" "}
+							<span className="item-name">{item.name}</span>
+							<div className="field">
+								<label htmlFor={`${item.key}-cantidad`}>Cantidad</label>
+								<input
+									id={`${item.key}-cantidad`}
+									type="number"
+									min="0"
+									step="1"
+									inputMode="numeric"
+									value={item.quantity}
+									onChange={(event) =>
+										updateItem(
+											item.key,
+											"quantity",
+											normalizeIntegerValue(event.target.value),
+										)
+									}
+								/>
+							</div>
+							<div className="field">
+								<label htmlFor={`${item.key}-precio`}>Precio</label>
+								<input
+									id={`${item.key}-precio`}
+									type="number"
+									min="0"
+									step="0.01"
+									value={item.price}
+									onChange={(event) =>
+										updateItem(item.key, "price", event.target.value)
+									}
+								/>
+							</div>
+							<div className="item-total">
+								<span>Total</span>
+								<strong>
 									{formatCurrency(calculateItemTotal(item.quantity, item.price))}
-								</span>
-								<span aria-hidden="true">{expandedItem === item.key ? "−" : "+"}</span>
-							</button>
-							{expandedItem === item.key && (
-								<div className="item-controls">
-									<div className="field">
-										<label htmlFor={`${item.key}-cantidad`}>Cantidad</label>
-										<input
-											id={`${item.key}-cantidad`}
-											type="number"
-											min="0"
-											step="1"
-											inputMode="numeric"
-											value={item.quantity}
-											onChange={(event) =>
-												updateItem(
-													item.key,
-													"quantity",
-													normalizeIntegerValue(event.target.value),
-												)
-											}
-										/>
-									</div>
-									<div className="field">
-										<label htmlFor={`${item.key}-precio`}>Precio</label>
-										<input
-											id={`${item.key}-precio`}
-											type="number"
-											min="0"
-											step="0.01"
-											value={item.price}
-											onChange={(event) =>
-												updateItem(item.key, "price", event.target.value)
-											}
-										/>
-									</div>
-									<div className="item-total">
-										<span>Total</span>
-										<strong>
-											{formatCurrency(calculateItemTotal(item.quantity, item.price))}
-										</strong>
-									</div>
-								</div>
-							)}
+								</strong>
+							</div>
 						</div>
 					))}
 				</div>

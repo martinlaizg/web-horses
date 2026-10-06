@@ -13,6 +13,7 @@ COPY code/backend/package*.json ./
 RUN npm ci --omit=dev
 COPY code/backend ./
 COPY --from=frontend-build /app/frontend/dist /app/frontend/dist
+RUN mkdir -p /app/backend/data
 
 ENV NODE_ENV=production
 EXPOSE 3000

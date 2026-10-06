@@ -1,0 +1,38 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Backend Express",
+			"type": "node",
+			"request": "launch",
+			"program": "${workspaceFolder}/code/backend/server.js",
+			"cwd": "${workspaceFolder}/code/backend",
+			"env": {
+				"NODE_ENV": "development"
+			},
+			"console": "integratedTerminal",
+			"skipFiles": ["<node_internals>/**"]
+		},
+		{
+			"name": "Frontend Vite",
+			"type": "node",
+			"request": "launch",
+			"runtimeExecutable": "npm",
+			"runtimeArgs": ["run", "dev"],
+			"cwd": "${workspaceFolder}/code/frontend",
+			"console": "integratedTerminal",
+			"serverReadyAction": {
+				"pattern": "Local:\\s+(https?://localhost:\\d+)",
+				"uriFormat": "%s",
+				"action": "openExternally"
+			}
+		}
+	],
+	"compounds": [
+		{
+			"name": "Aplicación completa",
+			"configurations": ["Backend Express", "Frontend Vite"],
+			"stopAll": true
+		}
+	]
+}

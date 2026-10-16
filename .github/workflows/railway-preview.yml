@@ -60,7 +60,7 @@ jobs:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
           RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }}
         run: |
-          railway login --token $RAILWAY_TOKEN
+          export RAILWAY_TOKEN=$RAILWAY_TOKEN
           railway link $RAILWAY_PROJECT_ID
 
       - name: Build Docker image
@@ -164,7 +164,7 @@ jobs:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          railway login --token $RAILWAY_TOKEN
+          export RAILWAY_TOKEN=$RAILWAY_TOKEN
           SERVICE_NAME="web-horses-pr-${PR_NUMBER}"
           # Delete the service for this PR
           railway delete --service $SERVICE_NAME --yes 2>/dev/null || true

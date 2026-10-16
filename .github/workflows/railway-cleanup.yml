@@ -1,0 +1,46 @@
+name: Railway Cleanup
+
+on:
+  schedule:
+    # Run every day at midnight UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Cleanup old preview deployments
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }}
+        run: |
+          railway login --token $RAILWAY_TOKEN
+          railway link $RAILWAY_PROJECT_ID
+          
+          # Get all services
+          SERVICES=$(railway status --json 2>/dev/null | jq -r '.services[].name' || echo "")
+          
+          # Find preview services older than 7 days
+          if [ -n "$SERVICES" ]; then
+            for SERVICE in $SERVICES; do
+              if [[ $SERVICE == web-horses-pr-* ]]; then
+                PR_NUMBER=${SERVICE#web-horses-pr-}
+                
+                # Check if PR still exists
+                PR_EXISTS=$(gh pr view $PR_NUMBER --repo ${{ github.repository }} --json state 2>/dev/null | jq -r '.state' || echo "closed")
+                
+                if [ "$PR_EXISTS" != "open" ]; then
+                  echo "Deleting old preview service: $SERVICE"
+                  railway delete --service $SERVICE --yes 2>/dev/null || true
+                fi
+              fi
+            done
+          fi

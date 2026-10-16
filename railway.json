@@ -1,0 +1,24 @@
+{
+  "services": {
+    "web": {
+      "name": "web-horses",
+      "startCommand": "npm start",
+      "buildCommand": "cd frontend && npm install && npm run build && cd ../backend && npm install",
+      "autoDeploy": true,
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": "3000"
+      },
+      "volumes": {
+        "/app/backend/data": {
+          "mount": true
+        }
+      }
+    }
+  },
+  "plugins": {
+    "dockerfile": {
+      "path": "./Dockerfile"
+    }
+  }
+}

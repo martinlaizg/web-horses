@@ -103,13 +103,10 @@ jobs:
               return;
             }
             
-            const commentBody = `:rocket: **Railway Preview Deployment**
-
-Tu PR tiene un entorno de previsualizacion listo para probar:
-
-:globe_with_meridians: **URL:** ${PREVIEW_URL}
-
-Este entorno se eliminara automaticamente cuando el PR se fusione o cierre.`;
+            const commentBody = ':rocket: **Railway Preview Deployment**\n\n' +
+              'Tu PR tiene un entorno de previsualizacion listo para probar:\n\n' +
+              ':globe_with_meridians: **URL:** ' + PREVIEW_URL + '\n\n' +
+              'Este entorno se eliminara automaticamente cuando el PR se fusione o cierre.';
             
             // Check if a preview comment already exists
             const { data: comments } = await github.rest.issues.listComments({

@@ -22,13 +22,13 @@ app.get("/api/orders", async (_request, response, next) => {
 });
 
 app.post("/api/orders", async (request, response, next) => {
-	const { items, total } = request.body;
+	const { items, total, orderDate } = request.body;
 	if (!Array.isArray(items) || typeof total !== "number" || total < 0) {
 		return response.status(400).json({ error: "Pedido no válido" });
 	}
 
 	try {
-		response.status(201).json(await createOrder(items, total));
+		response.status(201).json(await createOrder(items, total, orderDate));
 	} catch (error) {
 		next(error);
 	}

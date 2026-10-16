@@ -17,6 +17,7 @@ export default function App() {
 	const [items, setItems] = useState(initialItems);
 	const [history, setHistory] = useState([]);
 	const [message, setMessage] = useState("");
+	const [orderDate, setOrderDate] = useState(new Date().toISOString().split("T")[0]);
 	const total = useMemo(() => calculateOrderTotal(items), [items]);
 
 	useEffect(() => {
@@ -30,7 +31,7 @@ export default function App() {
 		const response = await fetch("/api/orders", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ items, total }),
+			body: JSON.stringify({ items, total, orderDate }),
 		});
 		if (!response.ok) {
 			setMessage("No se pudo guardar el pedido.");
@@ -103,6 +104,15 @@ export default function App() {
 				<div className="summary" aria-live="polite">
 					<span>Total del pedido</span>
 					<strong>{formatCurrency(total)}</strong>
+				</div>
+				<div className="field">
+					<label htmlFor="order-date">Fecha del pedido</label>
+					<input
+						id="order-date"
+						type="date"
+						value={orderDate}
+						onChange={(event) => setOrderDate(event.target.value)}
+					/>
 				</div>
 				<button type="button" onClick={saveOrder}>Guardar pedido</button>
 				{message && <p role="status">{message}</p>}

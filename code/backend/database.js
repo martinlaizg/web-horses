@@ -29,9 +29,9 @@ function listOrders() {
 	});
 }
 
-function createOrder(items, total) {
+function createOrder(items, total, orderDate) {
 	return new Promise((resolve, reject) => {
-		const createdAt = new Date().toISOString();
+		const createdAt = orderDate || new Date().toISOString();
 		database.run(
 			"INSERT INTO orders (items, total, created_at) VALUES (?, ?, ?)",
 			[JSON.stringify(items), total, createdAt],

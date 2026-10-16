@@ -1,6 +1,6 @@
 # Railway Preview Deployments - Configuración
 
-Este proyecto está configurado para desplegar automáticamente **preview environments** en Railway para cada Pull Request.
+Este proyecto está configurado para desplegar automáticamente **preview environments** en Railway para Pull Requests con la etiqueta `preview`.
 
 ## 🔧 Requisitos previos
 
@@ -46,15 +46,37 @@ railway login
 
 ## ✅ ¿Cómo funciona?
 
-1. **Al abrir un PR**: Se crea automáticamente un despliegue en Railway
-2. **Comentario en el PR**: Se publica un comentario con el URL del preview
-3. **Al fusionar/cerrar el PR**: Se elimina automáticamente el servicio
-4. **Limpieza diaria**: Un workflow elimina servicios antiguos (a las 00:00 UTC)
+1. **Al abrir un PR con la etiqueta `preview`**: Se crea automáticamente un despliegue en Railway
+2. **Al añadir la etiqueta `preview` a un PR existente**: Se despliega el preview
+3. **Comentario en el PR**: Se publica un comentario con el URL del preview
+4. **Al quitar la etiqueta `preview`**: Se elimina el servicio de Railway
+5. **Al fusionar/cerrar el PR**: Se elimina automáticamente el servicio
+6. **Limpieza diaria**: Un workflow elimina servicios antiguos (a las 00:00 UTC)
 
 ## 🔄 Workflows
 
 - **`.github/workflows/railway-preview.yml`** - Despliega previews para cada PR
 - **`.github/workflows/railway-cleanup.yml`** - Limpieza diaria de previews antiguos
+
+## 🏷️ Uso de la etiqueta
+
+Para activar el preview deployment en un PR:
+
+```bash
+# Añadir la etiqueta preview a un PR existente
+gh pr edit {NUMERO_DE_PR} --add-label preview
+```
+
+O al crear el PR:
+```bash
+gh pr create --label preview
+```
+
+Para eliminar el preview deployment:
+```bash
+# Quitar la etiqueta preview
+gh pr edit {NUMERO_DE_PR} --remove-label preview
+```
 
 ## 🚀 Despliegue manual
 
